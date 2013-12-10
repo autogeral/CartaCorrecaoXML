@@ -1,0 +1,12 @@
+ANTES DE EXECUTAR O XJC ESSA ANOOTATION FOI COLOCADA NO FIM DO ARQUIVO tipoBasico_v1.03.xsd ANTES DE FECHAR O </xs:schema>
+
+       <xs:annotation>
+           <xs:appinfo>
+              <jaxb:globalBindings typesafeEnumMaxMembers="1000" />
+           </xs:appinfo>
+       </xs:annotation>
+
+E NO CABEÇALHO (<xs:schema) FOI COLOCADO:
+xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0"
+
+xjc file:///C:/Users/Murilo.Lima/Documents/NetBeansProjects/CartaCorrecaoXML/src/br/com/jcomputacao/cartaCorrecao/xml/np2011003/tiposBasico_v1.03.xsd file:///C:/Users/Murilo.Lima/Documents/NetBeansProjects/CartaCorrecaoXML/src/br/com/jcomputacao/cartaCorrecao/xml/np2011003/leiauteCCe_v1.00.xsd -d ///C:/Users/Murilo.Lima/Documents/NetBeansProjects/CartaCorrecaoXML/src/br/inf/portalfiscal/cartaCorrecao/xml/np2011003/cartasCorrecoes
