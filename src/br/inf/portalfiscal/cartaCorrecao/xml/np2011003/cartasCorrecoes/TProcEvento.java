@@ -40,8 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="procEventoCartaCorrecao")
-@XmlType(name = "procEventoCartaCorrecao", propOrder = {
+@XmlRootElement(name="procEventoNFe")
+@XmlType(name = "procEventoNFe", propOrder = {
     "evento",
     "retEvento"
 })

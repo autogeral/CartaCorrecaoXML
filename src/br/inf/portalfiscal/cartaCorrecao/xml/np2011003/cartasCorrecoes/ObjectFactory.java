@@ -99,5 +99,20 @@ public class ObjectFactory {
     public TEvento.InfEvento.DetEvento createTEventoInfEventoDetEvento() {
         return new TEvento.InfEvento.DetEvento();
     }
+    
+    /**
+     * Create an instance of {@link TConsSitNFe }
+     * 
+     */
+    public TConsSitNFe createTConsSitNFe() {
+        return new TConsSitNFe();
+    }
 
+    /**
+     * Create an instance of {@link TRetConsSitNFe }
+     * 
+     */
+    public TRetConsSitNFe createTRetConsSitNFe() {
+        return new TRetConsSitNFe();
+    }
 }
