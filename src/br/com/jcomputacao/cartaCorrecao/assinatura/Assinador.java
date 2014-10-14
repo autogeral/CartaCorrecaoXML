@@ -95,7 +95,7 @@ public class Assinador {
         String tag = "infEvento";       
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(false);
+        factory.setNamespaceAware(true);
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         ByteArrayInputStream bais = new ByteArrayInputStream(xml.getBytes(Charset.forName("UTF-8")));
@@ -108,6 +108,7 @@ public class Assinador {
         }
         Element el = (Element) elements.item(0);
         String id = el.getAttribute("Id");
+        el.setIdAttribute("Id", true);
 
         String providerName = System.getProperty(PROVIDER_NAME, PROVIDER_CLASS_NAME);
         XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM", (Provider) Class.forName(providerName).newInstance());
@@ -166,16 +167,16 @@ public class Assinador {
         KeyInfo ki = kif.newKeyInfo(Collections.singletonList(xd));
 
         // Instantiate the document to be signed.
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(true);
-
-        bais = new ByteArrayInputStream(xml.getBytes(Charset.forName("UTF-8")));
-        Document doc = dbf.newDocumentBuilder().parse(bais);
-        bais.close();
+//        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//        dbf.setNamespaceAware(true);
+//
+//        bais = new ByteArrayInputStream(xml.getBytes(Charset.forName("UTF-8")));
+//        Document doc = dbf.newDocumentBuilder().parse(bais);
+//        bais.close();
 
         // Create a DOMSignContext and specify the RSA PrivateKey and
         // location of the resulting XMLSignature's parent element.
-        DOMSignContext dsc = new DOMSignContext(keyEntry.getPrivateKey(), doc.getDocumentElement());
+        DOMSignContext dsc = new DOMSignContext(keyEntry.getPrivateKey(), docs.getDocumentElement());
 
         // Create the XMLSignature, but don't sign it yet.
         XMLSignature signature = fac.newXMLSignature(si, ki);
@@ -188,10 +189,10 @@ public class Assinador {
         //OutputStream os = new FileOutputStream(caminhoXmlNovo);
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer trans = tf.newTransformer();
-        trans.transform(new DOMSource(doc), new StreamResult(os));
+        trans.transform(new DOMSource(docs), new StreamResult(os));
 
         // Find Signature element.
-        NodeList nl = doc.getElementsByTagNameNS(XMLSignature.XMLNS, "Signature");
+        NodeList nl = docs.getElementsByTagNameNS(XMLSignature.XMLNS, "Signature");
 
         if (nl.getLength() == 0) {
             throw new Exception("Cannot find Signature element");
