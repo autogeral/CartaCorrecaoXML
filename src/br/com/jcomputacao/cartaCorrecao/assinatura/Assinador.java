@@ -98,9 +98,10 @@ public class Assinador {
         factory.setNamespaceAware(true);
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(xml.getBytes(Charset.forName("UTF-8")));
-        Document docs = builder.parse(bais);
-        bais.close();
+        Document docs;
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(xml.getBytes(Charset.forName("UTF-8")))) {
+            docs = builder.parse(bais);
+        }
         
         NodeList elements = docs.getElementsByTagName(tag);
         if (elements.getLength() == 0) {
@@ -138,9 +139,9 @@ public class Assinador {
             ks.load(null, senha.toCharArray());
         } else {
             ks = KeyStore.getInstance("PKCS12");
-            InputStream is = new FileInputStream(certificadoCaminho);
-            ks.load(is, senha.toCharArray());
-            is.close();
+            try (InputStream is = new FileInputStream(certificadoCaminho)) {
+                ks.load(is, senha.toCharArray());
+            }
         }
         //ks.load(new FileInputStream(caminhoCertificado), senha.toCharArray());
 //        URL url = new URL(caminhoCertificado);
@@ -166,13 +167,6 @@ public class Assinador {
         X509Data xd = kif.newX509Data(x509Content);
         KeyInfo ki = kif.newKeyInfo(Collections.singletonList(xd));
 
-        // Instantiate the document to be signed.
-//        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//        dbf.setNamespaceAware(true);
-//
-//        bais = new ByteArrayInputStream(xml.getBytes(Charset.forName("UTF-8")));
-//        Document doc = dbf.newDocumentBuilder().parse(bais);
-//        bais.close();
 
         // Create a DOMSignContext and specify the RSA PrivateKey and
         // location of the resulting XMLSignature's parent element.
